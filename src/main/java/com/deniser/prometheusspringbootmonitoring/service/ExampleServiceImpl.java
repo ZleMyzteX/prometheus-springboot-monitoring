@@ -13,7 +13,7 @@ public class ExampleServiceImpl implements ExampleService {
     public String exception() throws RuntimeException {
         LOGGER.info("Throwing exception");
 
-        throw new RuntimeException();
+        throw new RuntimeException("Exception from exception method.");
     }
 
     @Override
