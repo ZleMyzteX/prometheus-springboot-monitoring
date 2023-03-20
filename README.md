@@ -1,1 +1,1 @@
-# prometheus-springboot-monitoring
+# Example Setup for Springboot-Prometheus monitoring
