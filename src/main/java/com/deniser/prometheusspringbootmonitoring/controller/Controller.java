@@ -4,8 +4,9 @@ import com.deniser.prometheusspringbootmonitoring.service.ExampleServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,30 +17,54 @@ public class Controller {
 
     @Autowired
     public Controller(ExampleServiceImpl exampleServ) {
-        exampleService = exampleServ;
+        this.exampleService = exampleServ;
     }
 
-    @RequestMapping("/test")
+    @GetMapping("/test")
     public String test() {
         LOGGER.info("Requested test.");
         return "test-success!";
     }
 
-    @RequestMapping("/exception")
+    @GetMapping("/exception")
     public String exception() throws RuntimeException {
         LOGGER.info("Requested exception, throwing exception.");
         return exampleService.exception();
     }
 
-    @RequestMapping("/delay")
+    @GetMapping("/delay")
     public String returnWithDelay() throws InterruptedException {
         LOGGER.info("Requested standard delay");
         return exampleService.returnWithDelay();
     }
 
-    @RequestMapping("/delay/{time}")
+    @GetMapping("/delay/{time}")
     public String returnWithCustomDelay(@PathVariable("time") int delay) throws InterruptedException {
         LOGGER.info("Requested delay with custom time {}ms", delay);
         return exampleService.returnWithCustomDelay(delay);
+    }
+
+    @PutMapping("/custom/one")
+    public String incrementCustomCounterOne() {
+        LOGGER.info("Incrementing counter one");
+        return exampleService.incrementCounterOne();
+    }
+
+    @PutMapping("/custom/one/{amount}")
+    public String incrementCustomCounterOne(@PathVariable("amount") int amount) {
+        LOGGER.info("Incrementing counter one with amount {}", amount);
+        return exampleService.incrementCounterOne(amount);
+    }
+
+    @PutMapping("/custom/two")
+    public String incrementCustomCounterTwo() {
+        LOGGER.info("Incrementing counter two");
+        return exampleService.incrementCounterTwo();
+    }
+
+    @PutMapping("/custom/two/{amount}")
+    public String incrementCustomCounterTwo(@PathVariable("amount") int amount) {
+        LOGGER.info("Incrementing counter two with amount {}", amount);
+        return exampleService.incrementCounterTwo(amount);
     }
 }
