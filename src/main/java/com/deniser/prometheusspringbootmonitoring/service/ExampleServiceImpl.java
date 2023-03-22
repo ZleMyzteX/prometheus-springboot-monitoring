@@ -1,6 +1,8 @@
 package com.deniser.prometheusspringbootmonitoring.service;
 
-import com.deniser.prometheusspringbootmonitoring.component.ExampleComponent;
+import com.deniser.prometheusspringbootmonitoring.components.ExampleComponent;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,13 @@ public class ExampleServiceImpl implements ExampleService {
     public static final Logger LOGGER = LogManager.getLogger(ExampleServiceImpl.class);
     private static final String DELAY_SUCCESS_MESSAGE = "delay success!";
 
-    private ExampleComponent exampleComponent;
+    private final ExampleComponent exampleComponent;
+    private final MeterRegistry meterRegistry;
 
     @Autowired
-    public ExampleServiceImpl(ExampleComponent exampleComponent) {
+    public ExampleServiceImpl(ExampleComponent exampleComponent, MeterRegistry meterRegistry) {
         this.exampleComponent = exampleComponent;
+        this.meterRegistry = meterRegistry;
     }
 
     @Override
@@ -33,9 +37,16 @@ public class ExampleServiceImpl implements ExampleService {
     }
 
     @Override
-    public String returnWithCustomDelay(int delay) throws InterruptedException {
+    public String returnWithCustomDelay(int delay) {
         LOGGER.info("Requested custom delay at {}ms, waiting...", delay);
-        Thread.sleep(delay);
+        Timer timer = meterRegistry.timer(this.getClass().getSimpleName() + ".doWork");
+        timer.record(() -> {
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
         LOGGER.info("Delay over, returning.");
         return DELAY_SUCCESS_MESSAGE;
     }

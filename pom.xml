@@ -64,6 +64,13 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.0.4</version>
         </dependency>
+
+        <!-- aspectJ, needed for timed annotation -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>6.0.7</version>
+        </dependency>
     </dependencies>
 
     <build>

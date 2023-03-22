@@ -1,4 +1,4 @@
-package com.deniser.prometheusspringbootmonitoring.component;
+package com.deniser.prometheusspringbootmonitoring.components;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

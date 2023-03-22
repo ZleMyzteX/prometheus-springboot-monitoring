@@ -1,6 +1,7 @@
 package com.deniser.prometheusspringbootmonitoring.controller;
 
 import com.deniser.prometheusspringbootmonitoring.service.ExampleServiceImpl;
+import io.micrometer.core.annotation.Timed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,15 @@ public class Controller {
     }
 
     @GetMapping("/delay")
+    @Timed("return-static-delay")
     public String returnWithDelay() throws InterruptedException {
         LOGGER.info("Requested standard delay");
         return exampleService.returnWithDelay();
     }
 
     @GetMapping("/delay/{time}")
-    public String returnWithCustomDelay(@PathVariable("time") int delay) throws InterruptedException {
+    @Timed("return-custom-delay")
+    public String returnWithCustomDelay(@PathVariable("time") int delay) {
         LOGGER.info("Requested delay with custom time {}ms", delay);
         return exampleService.returnWithCustomDelay(delay);
     }
