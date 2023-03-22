@@ -1,7 +1,7 @@
 version: '1'
 services:
   application:
-    image: 'zlemyztex/prometheus-springboot-monitoring:latest'
+    image: 'zlemyztex/prometheus-springboot-monitoring:0.1'
     ports:
       - 8080:8080
   prometheus:

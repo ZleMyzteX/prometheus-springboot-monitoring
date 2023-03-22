@@ -20,5 +20,4 @@ class PrometheusSpringbootMonitoringApplicationTests {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> exampleService.exception());
         assertEquals("Exception from exception method.", exception.getMessage());
     }
-
 }

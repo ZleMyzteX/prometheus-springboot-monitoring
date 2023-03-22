@@ -48,6 +48,7 @@ public class Controller {
     }
 
     @PutMapping("/custom/one")
+    @Timed("increment-counter-one")
     public String incrementCustomCounterOne() {
         LOGGER.info("Incrementing counter one");
         return exampleService.incrementCounterOne();
@@ -60,6 +61,7 @@ public class Controller {
     }
 
     @PutMapping("/custom/two")
+    @Timed("increment-counter-two")
     public String incrementCustomCounterTwo() {
         LOGGER.info("Incrementing counter two");
         return exampleService.incrementCounterTwo();

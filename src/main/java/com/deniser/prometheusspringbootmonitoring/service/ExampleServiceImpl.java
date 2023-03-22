@@ -25,6 +25,7 @@ public class ExampleServiceImpl implements ExampleService {
     @Override
     public String exception() throws RuntimeException {
         LOGGER.info("Throwing exception");
+        LOGGER.error("Runtime exception thrown!");
         throw new RuntimeException("Exception from exception method.");
     }
 
