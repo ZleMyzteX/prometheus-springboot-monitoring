@@ -71,6 +71,13 @@
             <artifactId>spring-aspects</artifactId>
             <version>6.0.7</version>
         </dependency>
+
+        <!-- postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>
