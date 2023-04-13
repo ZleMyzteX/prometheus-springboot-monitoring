@@ -1,9 +1,16 @@
 version: '1'
 services:
   application:
-    image: 'zlemyztex/prometheus-springboot-monitoring:0.1'
+    image: 'zlemyztex/prometheus-springboot-monitoring:0.2.1'
     ports:
       - 8080:8080
+    depends_on:
+      - postgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+      - SPRING_DATASOURCE_USERNAME=postgres-user
+      - SPRING_DATASOURCE_PASSWORD=totallySecurePass
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
   prometheus:
     image: 'prom/prometheus:latest'
     volumes:
@@ -22,3 +29,6 @@ services:
     image: 'postgres'
     ports:
       - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres-user
+      - POSTGRES_PASSWORD=totallySecurePass
