@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom-spring-monitoring
+  labels:
+    app: psmonitoring-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psmonitoring-1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  progressDeadlineSeconds: 360
+  minReadySeconds: 1
+  revisionHistoryLimit: 10
+  template:
+    metadata:
+      labels:
+        app: psmonitoring-1
+    spec:
+      containers:
+        - name: app
+          image: 'zlemyztex/prometheus-springboot-monitoring:0.2'
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
