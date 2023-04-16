@@ -1,5 +1,6 @@
 package com.deniser.prometheusspringbootmonitoring.controller;
 
+import com.deniser.prometheusspringbootmonitoring.service.DelayServiceImpl;
 import com.deniser.prometheusspringbootmonitoring.service.ExampleServiceImpl;
 import io.micrometer.core.annotation.Timed;
 import org.apache.logging.log4j.LogManager;
@@ -15,10 +16,12 @@ public class Controller {
     public static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
     private final ExampleServiceImpl exampleService;
+    private final DelayServiceImpl delayService;
 
     @Autowired
-    public Controller(ExampleServiceImpl exampleServ) {
+    public Controller(ExampleServiceImpl exampleServ, DelayServiceImpl delayService) {
         this.exampleService = exampleServ;
+        this.delayService = delayService;
     }
 
     @GetMapping("/test")
@@ -37,14 +40,14 @@ public class Controller {
     @Timed("return-static-delay")
     public String returnWithDelay() throws InterruptedException {
         LOGGER.info("Requested standard delay");
-        return exampleService.returnWithDelay();
+        return delayService.returnWithDelay();
     }
 
     @GetMapping("/delay/{time}")
     @Timed("return-custom-delay")
     public String returnWithCustomDelay(@PathVariable("time") int delay) {
         LOGGER.info("Requested delay with custom time {}ms", delay);
-        return exampleService.returnWithCustomDelay(delay);
+        return delayService.returnWithCustomDelay(delay);
     }
 
     @PutMapping("/custom/one")
