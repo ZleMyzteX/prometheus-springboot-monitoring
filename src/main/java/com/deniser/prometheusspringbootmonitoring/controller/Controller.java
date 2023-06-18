@@ -6,12 +6,14 @@ import io.micrometer.core.annotation.Timed;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class Controller {
     public static final Logger LOGGER = LogManager.getLogger(Controller.class);
 
@@ -25,9 +27,11 @@ public class Controller {
     }
 
     @GetMapping("/test")
-    public String test() {
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Map<String, String> test() {
         LOGGER.info("Requested test.");
-        return "test-success!";
+        return Collections.singletonMap("response", "test-success!");
     }
 
     @GetMapping("/exception")

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prom-spring-frontend-service
+  labels:
+    app: prom-spring-frontend-app
+spec:
+  ports:
+    - port: 80
+      nodePort: 30080
+      targetPort: 80
+  selector:
+    app: prom-spring-frontend-app
+  type: NodePort

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom-spring-frontend-deployment
+  labels:
+    app: prom-spring-frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prom-spring-frontend-app
+  template:
+    metadata:
+      labels:
+        app: prom-spring-frontend-app
+    spec:
+      containers:
+        - name: prom-spring-frontend
+          image: zlemyztex/prom-spring-monitoring-frontend:v0.2
+          ports:
+            - containerPort: 80
