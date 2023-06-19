@@ -7,10 +7,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Map;
+
 @Service
 public class DelayServiceImpl implements DelayService {
     public static final Logger LOGGER = LogManager.getLogger(DelayServiceImpl.class);
-    private static final String DELAY_SUCCESS_MESSAGE = "delay success!";
+    private static final Map<String, String> DELAY_SUCCESS_MESSAGE = Collections.singletonMap("response", "test-delay-success!");
 
     private final MeterRegistry meterRegistry;
 
@@ -21,7 +24,7 @@ public class DelayServiceImpl implements DelayService {
 
 
     @Override
-    public String returnWithDelay() throws InterruptedException {
+    public Map<String, String> returnWithDelay() throws InterruptedException {
         LOGGER.info("Requested delay, waiting 1000ms");
         Thread.sleep(1000);
         LOGGER.info("Delay over, returning.");
@@ -29,7 +32,7 @@ public class DelayServiceImpl implements DelayService {
     }
 
     @Override
-    public String returnWithCustomDelay(int delay) {
+    public Map<String, String> returnWithCustomDelay(int delay) {
         LOGGER.info("Requested custom delay at {}ms, waiting...", delay);
         Timer timer = meterRegistry.timer(this.getClass().getSimpleName() + ".doWork");
         timer.record(() -> {

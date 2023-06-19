@@ -42,14 +42,14 @@ public class Controller {
 
     @GetMapping("/delay")
     @Timed("return-static-delay")
-    public String returnWithDelay() throws InterruptedException {
+    public Map<String, String> returnWithDelay() throws InterruptedException {
         LOGGER.info("Requested standard delay");
         return delayService.returnWithDelay();
     }
 
     @GetMapping("/delay/{time}")
     @Timed("return-custom-delay")
-    public String returnWithCustomDelay(@PathVariable("time") int delay) {
+    public Map<String, String> returnWithCustomDelay(@PathVariable("time") int delay) {
         LOGGER.info("Requested delay with custom time {}ms", delay);
         return delayService.returnWithCustomDelay(delay);
     }
